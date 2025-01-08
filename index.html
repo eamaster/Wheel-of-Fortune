@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheel of Fortune</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        #form-section {
+            display: block;
+            margin: 20px;
+        }
+        #wheel-section {
+            display: none;
+            margin: 20px;
+        }
+        canvas {
+            margin: 20px auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="form-section">
+        <h2>Enter Your Details to Spin the Wheel</h2>
+        <form id="customerForm">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" required><br><br>
+
+            <label for="phone">Phone Number:</label><br>
+            <input type="text" id="phone" name="phone" required><br><br>
+
+            <label for="vehicle">Vehicle Model:</label><br>
+            <input type="text" id="vehicle" name="vehicle" required><br><br>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div id="wheel-section">
+        <canvas id="canvas" width="500" height="500"></canvas>
+        <button onclick="spin()">Spin the Wheel!</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/zarocknz/javascript-winwheel/Winwheel.min.js"></script>
+    <script>
+        // Form submission and showing the wheel
+        document.getElementById('customerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const vehicle = document.getElementById('vehicle').value;
+
+            if (name && phone && vehicle) {
+                console.log('Customer Details:', { name, phone, vehicle });
+
+                // Store customer details for further use
+                localStorage.setItem('customerName', name);
+                localStorage.setItem('customerPhone', phone);
+                localStorage.setItem('customerVehicle', vehicle);
+
+                // Show the wheel section
+                document.getElementById('form-section').style.display = 'none';
+                document.getElementById('wheel-section').style.display = 'block';
+            }
+        });
+
+        // Configure the wheel
+        const theWheel = new Winwheel({
+            'numSegments': 6,
+            'segments': [
+                { 'fillStyle': '#eae56f', 'text': '10% Off' },
+                { 'fillStyle': '#89f26e', 'text': 'Free Shipping' },
+                { 'fillStyle': '#7de6ef', 'text': '20% Off' },
+                { 'fillStyle': '#e7706f', 'text': 'Free Item' },
+                { 'fillStyle': '#eae56f', 'text': '5% Off' },
+                { 'fillStyle': '#89f26e', 'text': 'No Prize' }
+            ],
+            'animation': {
+                'type': 'spinToStop',
+                'duration': 5,
+                'spins': 8,
+                'callbackFinished': displayResult
+            }
+        });
+
+        // Spin the wheel
+        function spin() {
+            theWheel.startAnimation();
+        }
+
+        // Display the result after spinning
+        function displayResult(indicatedSegment) {
+            const prize = indicatedSegment.text;
+            const name = localStorage.getItem('customerName');
+            alert(`${name}, you won: ${prize}!`);
+        }
+    </script>
+</body>
+</html>
