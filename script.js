@@ -1,5 +1,5 @@
 // Replace this with your Google Apps Script Web App URL
-const googleScriptURL = "https://script.google.com/macros/s/AKfycb.../exec";
+const googleScriptURL = "https://script.google.com/macros/s/AKfycbxNc9HSwj9lFTddD2zGmbcawufZyDa5eTf1tKiMJXO5XZhLP1W2BsEt0e8yhEhxZ0cA/exec";
 
 let spinSound;
 
