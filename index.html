@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheel of Fortune</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="form-section">
+        <h2>Enter Your Details to Spin the Wheel</h2>
+        <form id="customerForm">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" required><br><br>
+
+            <label for="phone">Phone Number:</label><br>
+            <input type="text" id="phone" name="phone" required><br><br>
+
+            <label for="vehicle">Vehicle Model:</label><br>
+            <input type="text" id="vehicle" name="vehicle" required><br><br>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div id="wheel-section">
+        <canvas id="canvas" width="500" height="500"></canvas>
+        <div class="pointer">
+            <span>SPIN</span>
+        </div>
+    </div>
+
+    <div id="modalOverlay"></div>
+    <div id="prizeModal">
+        <h2 id="prizeText"></h2>
+        <button id="closePrizeModal">OK</button>
+    </div>
+
+    <div id="limitationModal">
+        <h2>You have already played!</h2>
+        <button id="closeLimitationModal">OK</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/zarocknz/javascript-winwheel/Winwheel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
