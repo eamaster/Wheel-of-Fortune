@@ -66,9 +66,8 @@ function saveResultToSheet(name, prize) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     })
-    .then(response => response.json()) // Parse JSON response
-    .then(data => {
-        if (data.status === 'success') {
+    .then(response => {
+        if (response.ok) {
             console.log("Result saved successfully to Google Sheets.");
         } else {
             console.error("Failed to save the result to Google Sheets.");
@@ -95,9 +94,8 @@ document.getElementById('customerForm').addEventListener('submit', function (e) 
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(userData)
         })
-        .then(response => response.json()) // Parse JSON response
-        .then(data => {
-            if (data.status === 'success') {
+        .then(response => {
+            if (response.ok) {
                 alert("Your details have been saved. You can now spin the wheel!");
                 localStorage.setItem('customerName', name);
                 localStorage.setItem('hasSpun', 'false');
