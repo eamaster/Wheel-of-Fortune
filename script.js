@@ -54,7 +54,7 @@ async function displayResult(indicatedSegment) {
 
     // Send data to backend (Google Sheets Web App)
     try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbwqv6JVdsW5ru0rV3dJwDgELHnh1Iby0nF5pPx_A_teZuf8CN0u-5xWzb0icpIeHdIroQ/exec", {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbw4sgbEYBxHAWMy85mTrOhx9gn03tflsVCx1k-xtlY1UtzQkzf6YJVpvuFqis2pKZbIgA/exec", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
