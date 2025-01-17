@@ -33,11 +33,11 @@ const theWheel = new Winwheel({
     }
 }*/
 
-async function displayResult(indicatedSegment) {
+/*async function displayResult(indicatedSegment) {
     if (spinSound) {
         spinSound.pause();
         spinSound.currentTime = 0;
-    }
+    }*/
 
     const prize = indicatedSegment.text;
     const name = localStorage.getItem('customerName');
