@@ -1,5 +1,5 @@
 // Replace this with your Google Apps Script Web App URL
-const googleScriptURL = "https://script.google.com/macros/s/AKfycbxNc9HSwj9lFTddD2zGmbcawufZyDa5eTf1tKiMJXO5XZhLP1W2BsEt0e8yhEhxZ0cA/exec";
+const googleScriptURL = "https://script.google.com/macros/s/AKfycbzEH1wTvWuWJk1AEFr4NIwYaP5TzIE0KbV63tSyEEs/dev";
 
 let spinSound;
 
@@ -10,22 +10,22 @@ try {
 }
 
 const theWheel = new Winwheel({
-    'canvasId': 'canvas',
-    'numSegments': 6,
-    'segments': [
-        { 'fillStyle': '#eae56f', 'text': '10% Off' },
-        { 'fillStyle': '#89f26e', 'text': 'Free Shipping' },
-        { 'fillStyle': '#7de6ef', 'text': '20% Off' },
-        { 'fillStyle': '#e7706f', 'text': 'Free Item' },
-        { 'fillStyle': '#eae56f', 'text': '5% Off' },
-        { 'fillStyle': '#89f26e', 'text': 'No Prize' }
+    canvasId: 'canvas',
+    numSegments: 6,
+    segments: [
+        { fillStyle: '#eae56f', text: '10% Off' },
+        { fillStyle: '#89f26e', text: 'Free Shipping' },
+        { fillStyle: '#7de6ef', text: '20% Off' },
+        { fillStyle: '#e7706f', text: 'Free Item' },
+        { fillStyle: '#eae56f', text: '5% Off' },
+        { fillStyle: '#89f26e', text: 'No Prize' }
     ],
-    'animation': {
-        'type': 'spinToStop',
-        'duration': 5,
-        'spins': 8,
-        'callbackFinished': displayResult,
-        'callbackSound': playSound
+    animation: {
+        type: 'spinToStop',
+        duration: 5,
+        spins: 8,
+        callbackFinished: displayResult,
+        callbackSound: playSound
     }
 });
 
@@ -44,7 +44,7 @@ function displayResult(indicatedSegment) {
     }
 
     const prize = indicatedSegment.text;
-    const name = localStorage.getItem('customerName');
+    const name = localStorage.getItem('customerName') || "Unknown";
 
     document.getElementById('prizeText').textContent = `${name}, you won: ${prize}!`;
     document.getElementById('modalOverlay').style.display = 'block';
@@ -66,11 +66,12 @@ function saveResultToSheet(name, prize) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     })
-    .then(response => {
-        if (response.ok) {
+    .then(response => response.json()) // Parse JSON response
+    .then(result => {
+        if (result.status === 'success') {
             console.log("Result saved successfully to Google Sheets.");
         } else {
-            console.error("Failed to save the result to Google Sheets.");
+            console.error("Error from server:", result.message || "Unknown error.");
         }
     })
     .catch(error => {
@@ -94,21 +95,24 @@ document.getElementById('customerForm').addEventListener('submit', function (e) 
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(userData)
         })
-        .then(response => {
-            if (response.ok) {
+        .then(response => response.json())
+        .then(result => {
+            if (result.status === 'success') {
                 alert("Your details have been saved. You can now spin the wheel!");
                 localStorage.setItem('customerName', name);
                 localStorage.setItem('hasSpun', 'false');
                 document.getElementById('form-section').style.display = 'none';
                 document.getElementById('wheel-section').style.display = 'block';
             } else {
-                throw new Error("Failed to save your details.");
+                throw new Error(result.message || "Failed to save your details.");
             }
         })
         .catch(error => {
             console.error("Error saving data:", error);
             alert("There was an error saving your details. Please try again later.");
         });
+    } else {
+        alert("Please fill out all fields before submitting.");
     }
 });
 
