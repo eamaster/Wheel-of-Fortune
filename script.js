@@ -21,7 +21,7 @@ const theWheel = new Winwheel({
         'duration': 5,
         'spins': 8,
         'callbackFinished': displayResult,
-        //'callbackSound': playSound//
+        'callbackSound': playSound
     }
 });
 
