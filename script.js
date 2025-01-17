@@ -45,6 +45,8 @@ async function displayResult(indicatedSegment) {
     const vehicle = localStorage.getItem('customerVehicle');
     const timestamp = new Date().toLocaleString();
 
+    console.log("Prize Data:", { name, phone, vehicle, prize, timestamp });
+
     // Display prize
     document.getElementById('prizeText').textContent = `${name}, you won: ${prize}!`;
     document.getElementById('modalOverlay').style.display = 'block';
