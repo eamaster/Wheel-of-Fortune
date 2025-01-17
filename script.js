@@ -1,9 +1,9 @@
-let spinSound;
+/*let spinSound;
 try {
     spinSound = new Audio("data:audio/mpeg;base64,[paste_sound_code_here]");
 } catch (error) {
     console.error("Error initializing spin sound:", error);
-}
+}*/
 
 const theWheel = new Winwheel({
     'canvasId': 'canvas',
@@ -25,13 +25,13 @@ const theWheel = new Winwheel({
     }
 });
 
-function playSound() {
+/*function playSound() {
     if (spinSound) {
         spinSound.play().catch((error) => {
             console.warn("Audio playback failed:", error);
         });
     }
-}
+}*/
 
 async function displayResult(indicatedSegment) {
     if (spinSound) {
